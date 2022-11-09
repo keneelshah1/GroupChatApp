@@ -1,1 +1,1 @@
-# GroupChatApp
+# PhotoAlbumApp
