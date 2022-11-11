@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <style>
+        body {
+            background-color: black;
+            color: #F38B34;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top shadow-sm" id="navbarsDefault">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'index' %}">Authentication App</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsDefault">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarsDefault">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item  mr-4">
+                    <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+                </li>
+                <li class="nav-item  mr-4">
+                    <a class="nav-link" href="{% url 'logout_view' %}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="py-4">
+    <select onchange=changeData() id="selectionbar"
+            style="padding-top: 50px; margin-left: 560px; background-color: black;color:#F38B34; border-color: #F38B34">
+        <option value="" {% if not request.session.task_status %}selected{% endif %}>All</option>
+        <option value="AC" {% if request.session.task_status == 'AC' %}selected{% endif %}>Active</option>
+        <option value="CO" {% if request.session.task_status == 'CO' %}selected{% endif %}>Completed</option>
+    </select>
+    <button style="background-color: black;color:#F38B34; border-color: #F38B34;"><a href="{% url 'createTask' %}">Create New Task</a></button>
+    <script>
+        function changeData(e) {
+
+            val = document.getElementById("selectionbar").value
+            window.location.replace("{% url 'home' %}?task_status=" + val)
+            $.ajax(
+                {
+                    type: "GET",
+                    url: "{% url 'home' %}?task_status=" + val,
+                    success: function (data) {
+                        window.location.reload()
+                    }
+                }
+            );
+        }
+    </script>
+    {% if task != None %}
+        {% if request.session.task_status %}
+            <div class="container h-100 d-flex justify-content-center">
+                <table class="table">
+                    <tbody>
+                    {% for i in task %}
+                        <tr>
+                            {% if i.task_status == request.session.task_status %}
+                                <td><p>{{ i.task_name }}</p></td>
+                                {% if i.task_status == 'CO' %}
+                                    <td>
+                                        <button type="input"><a href="{% url 'deletetask' %}?id={{ i.id }}">Delete
+                                            Task</a></button>
+                                    </td>
+                                {% else %}
+                                    <td>
+                                        <button type="input"><a href="{% url 'completetask' %}?id={{ i.id }}">Mark
+                                            Completed</a></button>
+                                    </td>
+                                {% endif %}
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% if request.session.task_status == 'CO' %}
+                <button type="input" style="background-color: black;
+    color:#F38B34;border-color: #F38B34;margin-left: 550px"><a href="{% url 'deleteaslltasks' %}">Delete All Tasks</a>
+                </button>
+            {% endif %}
+        {% else %}
+            <div class="container h-100 d-flex justify-content-center">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <td>Task Name</td>
+                        <td>Task Status</td>
+                        <td>Action</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for i in task %}
+                        <tr>
+                            <td><p>{{ i.task_name }}</p></td>
+                            {% if i.task_status == 'CO' %}
+                                <td><p>Completed</p></td>
+                                <td>
+                                    <button type="input"><a href="{% url 'deletetask' %}?id={{ i.id }}">Delete Task</a>
+                                    </button>
+                                </td>
+                            {% else %}
+                                <td><p>Active</p></td>
+                                <td>
+                                    <button type="input"><a href="{% url 'completetask' %}?id={{ i.id }}">Mark
+                                        Completed</a></button>
+                                </td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+    {% endif %}
+
+</div>
+
+</body>
+</html>

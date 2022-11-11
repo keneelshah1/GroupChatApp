@@ -1,0 +1,112 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Profile</title>
+
+    <!-- Bootstrap core CSS -->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+</head>
+
+<body>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top shadow-sm" id="navbarsDefault">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'index' %}">Authentication App</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsDefault">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarsDefault">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active mr-4">
+                    <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+                </li>
+                <li class="nav-item  mr-4">
+                    <a class="nav-link" href="{% url 'logout_view' %}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<main class="py-4" style="margin-top: 50px;">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="userInfo">
+                <img src="{{ user_data.profilepic.url }}" class="rounded-circle" alt="img">
+                <h1>{{ user_data.firstname }}</h1>
+            </div>
+            <form class="profile-index-form" method="POST" action="" enctype="multipart/form-data">
+                <div class="col-lg-6 col-sm-12 ">
+                    <div class="basic-details-wrapper">
+                        <hr/>
+                        <h4>Basic Details</h4>
+                        <div class="form-group row">
+                            <label for="first_name" class="col-md-4 col-form-label text-md-right">First Name</label>
+                            <div class="col-md-6">
+                                <input id="first_name" type="text" class="form-control" name="first_name" value="{{ user_data.firstname }}"required autofocus \>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="last_name" class="col-md-4 col-form-label text-md-right">Last Name</label>
+                            <div class="col-md-6">
+                                <input id="last_name" type="text" class="form-control" name="last_name" value = "{{ user_data.lastname }}" required autofocus>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="email" class="col-md-4 col-form-label text-md-right">Email</label>
+
+                            <div class="col-md-6">
+                                <input id="email" type="text" class="form-control" name="email" value="{{ user_data.email }}" required autofocus>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="pswd" class="col-md-4 col-form-label text-md-right">Password</label>
+
+                            <div class="col-md-6">
+                                <input id="pswd" type="password" class="form-control" name="email" value="12345678" required  autofocus>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="image-wrapper pt-5 mt-5">
+                        <hr/>
+                        <h4>Change Profile Image</h4>
+
+                        <div class="form-group row">
+                            <label for="img" class="col-md-4 col-form-label text-md-right">Profile Image</label>
+                            <div class="col-md-6">
+                                <input id="img" type="file" class="form-control" name="img" accept="image/*" autofocus>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="button-wrapper p-5 m-5">
+                        <button class="btn btn-primary" id="profileBtn" type="submit" name="save">Save Changes</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+
+</body>
+
+</html>

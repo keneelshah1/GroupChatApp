@@ -1,0 +1,49 @@
+  body{
+    height: 100vh;
+    overflow-y: hidden;
+    background-color: black;
+    background-position: center;
+    background-size: 1620px 880px;
+  }
+  
+  #main {
+    width: 75%;
+    margin-top: 18%;
+    border: 1px solid #F38B34;
+    /* box-shadow: 3px 3px 3px 3px rgb(183, 156, 255); */
+    border-radius: 5px;
+    /* background-color: black; */
+    color:#F38B34;
+
+  }
+ 
+  /* .navbar {
+    -webkit-box-shadow: 0 8px 6px -6px #999;
+    -moz-box-shadow: 0 8px 6px -6px #999;
+    box-shadow: 0 8px 6px -6px #999;
+} */
+
+
+
+
+  @media only screen and (max-width: 1199px) {
+
+    #logo,
+    #hes {
+      display: none;
+    }
+
+    body {
+      height: 100vh;
+      background-size: 420px 320px;
+      background-repeat: no-repeat;
+      background-color: black;
+    }
+
+    #main {
+      border: hidden;
+      box-shadow: none;
+      border-radius: none;
+    }
+  }
+  
