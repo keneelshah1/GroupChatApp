@@ -1,0 +1,20 @@
+/* .navbar {
+    -webkit-box-shadow: 0 8px 6px -6px #999;
+    -moz-box-shadow: 0 8px 6px -6px #999;
+    box-shadow: 0 8px 6px -6px #999;
+} */
+
+.card{
+    border: 1px solid #F38B34;
+    background-color: black;
+}
+.card-header{
+    border-bottom: 1px solid #F38B34;
+}
+.form-control{
+    border: 1px solid #F38B34;
+}
+body{
+    background-color: black;
+    color:#F38B34;
+}
