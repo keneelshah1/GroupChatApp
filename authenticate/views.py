@@ -159,3 +159,12 @@ def addimage(request):
             return redirect('photogrid')
         else:
             return render(request, 'addimage.html')
+
+def photogrid(request):
+    if request.user.is_authenticated:
+        user_id = request.user.username
+        user_obj = UserData.objects.get(username=user_id)
+        photo = PhotoData.objects.filter(username=user_obj).order_by('-upload_date')
+        return render(request, 'photogrid.html', {'photos': photo})
+    else:
+        return redirect('index')
