@@ -23,3 +23,23 @@ class Tasks(models.Model):
     task_status = models.CharField(max_length=2, choices=task_categories, default='AC')
 
 
+class PhotoData(models.Model):
+    username = models.ForeignKey(UserData, on_delete=models.CASCADE)
+    photo = models.ImageField(blank=False, upload_to='images')
+    upload_date = models.DateTimeField(default=datetime.now())
+
+
+class Tags(models.Model):
+    name = models.CharField(max_length=255)
+
+
+    def __str__(self):
+        return self.name
+
+
+class Phototag(models.Model):
+    tag = models.ForeignKey(Tags,max_length=255, on_delete=models.CASCADE)
+    photo = models.ForeignKey(PhotoData,max_length=255, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.tag.name + str(self.photo.username)
