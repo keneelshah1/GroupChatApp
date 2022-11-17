@@ -138,3 +138,24 @@ def profile(request):
     # if request.method == 'POST':
 
 
+def addimage(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            img = request.FILES['photo']
+            tags = request.POST['tags']
+            split_tags = tags.split(', ')
+            usr = UserData.objects.get(username=request.user.username)
+            img_obj = PhotoData(username=usr, photo=img)
+            img_obj.save()
+            for tag in split_tags:
+                is_exist = Tags.objects.filter(name=tag).exists()
+                if not is_exist:
+                    new_tag = Tags(name=tag)
+                    new_tag.save()
+                else:
+                    new_tag = Tags.objects.get(name=tag)
+                PhotoTag = Phototag(tag=new_tag, photo=img_obj)
+                PhotoTag.save()
+            return redirect('photogrid')
+        else:
+            return render(request, 'addimage.html')
