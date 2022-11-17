@@ -11,7 +11,6 @@ urlpatterns = [
     path('deleteatsk', views.deletetask, name='deletetask'),
     path('deletealltasks', views.deletealltasks, name='deleteaslltasks'),
     path('profile', views.profile, name='profile'),
-    path('photogrid', views.photogrid, name='photogrid'),
 ]
 
 

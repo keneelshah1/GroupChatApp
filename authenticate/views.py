@@ -1,11 +1,10 @@
-from django.contrib.auth import authenticate
+
 from django.shortcuts import render, redirect
 
 from django.contrib.auth import logout, login
 from django.contrib.auth.models import User, auth
-from .models import UserData, Tasks, PhotoData
-
-
+from .models import UserData, Tasks, PhotoData, Tags, Phototag
+from datetime import datetime
 
 # Create your views here.
 
@@ -139,14 +138,3 @@ def profile(request):
     # if request.method == 'POST':
 
 
-def photogrid(request):
-    if request.user.is_authenticated:
-        if 'POST' == 'POST':
-            user_id = request.user.username
-            user_obj = UserData.objects.get(username=user_id)
-            photo = PhotoData.objects.filter(username=user_obj)
-            return render(request, 'photogrid.html', {'photos': photo})
-        else:
-            return render(request, 'photogrid.html')
-    else:
-        return redirect('index')

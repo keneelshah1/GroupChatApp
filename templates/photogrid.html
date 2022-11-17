@@ -1,4 +1,4 @@
-{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,23 +17,39 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
-</head>
-<body>
-<div class="lightbox">
-    <div class="row">
-        {% for photo in photos %}
-            <div class="col-lg-6">
-                <img
-                        src="{{ photo.photo.url }}"
-                        data-mdb-img="{{ photo.photo.url }}"
-                        alt=""
-                        class="w-100 mb-2 mb-md-4 shadow-1-strong rounded"
-                />
-            </div>
-        {% endfor %}
 
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"/>
+    <link rel="stylesheet" type="text/css" href="{% static '/css/photogrid.css' %}">
+    <script>
+
+
+    </script>
+</head>
+<body style="background-color: black">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top shadow-sm">
+    <a class="navbar-brand" href="#">Photos App</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item mr-4">
+                <a class="nav-link" href="#">Task App</a>
+            </li>
+            <li class="nav-item mr-4">
+                <a class="nav-link" href="#">Add images</a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0" action="#" method="POST">
+            <input class="form-control mr-sm-2" name="search" id="search" type="search" placeholder="Search"
+                   aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
     </div>
-</div>
+</nav>
 
 </body>
 </html>
