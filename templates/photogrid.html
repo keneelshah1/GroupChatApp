@@ -1,4 +1,4 @@
-
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,7 +28,7 @@
 </head>
 <body style="background-color: black">
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top shadow-sm">
-    <a class="navbar-brand" href="#">Photos App</a>
+    <a class="navbar-brand" href="{% url 'photogrid' %}">Photos App</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -37,19 +37,39 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item mr-4">
-                <a class="nav-link" href="#">Task App</a>
+                <a class="nav-link" href="{% url 'home' %}">Task App</a>
             </li>
             <li class="nav-item mr-4">
-                <a class="nav-link" href="#">Add images</a>
+                <a class="nav-link" href="{% url 'addimage' %}">Add images</a>
             </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0" action="#" method="POST">
+        <form class="form-inline my-2 my-lg-0" action="{% url 'photogrid' %}" method="POST">
+            {% csrf_token %}
             <input class="form-control mr-sm-2" name="search" id="search" type="search" placeholder="Search"
                    aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
     </div>
 </nav>
+
+<div class="lightbox" style="padding-top: 80px">
+    <div class="row">
+        {% for photo in photos %}
+            <div class="col-lg-6">
+                <div class="hovereffect">
+                    <img
+                            src="{{ photo.photo.url }}"
+                            data-mdb-img="{{ photo.photo.url }}"
+                            alt=""
+                            class="w-100 mb-2 mb-md-4 shadow-1-strong rounded"
+                    />
+                </div>
+            </div>
+
+        {% endfor %}
+
+    </div>
+</div>
 
 </body>
 </html>
