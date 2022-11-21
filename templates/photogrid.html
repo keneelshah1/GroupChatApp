@@ -53,6 +53,9 @@
 </nav>
 
 <div class="lightbox" style="padding-top: 80px">
+    {% if search %}
+        <h2 style="color:#F38B34;">Search results for {{ search }}</h2>
+    {% endif %}
     <div class="row">
         {% for photo in photos %}
             <div class="col-lg-6">
@@ -63,6 +66,19 @@
                             alt=""
                             class="w-100 mb-2 mb-md-4 shadow-1-strong rounded"
                     />
+                    <div class="overlay">
+                        <a class='info' href="{% url 'editphoto' photo.id %}">
+                            <span class="material-symbols-outlined">
+                                edit
+                            </span>
+                        </a>
+                        <a class="info" href="#" >
+                            <span class="material-symbols-outlined">
+                                delete
+                            </span>
+                        </a>
+
+                    </div>
                 </div>
             </div>
 
