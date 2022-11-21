@@ -168,4 +168,3 @@ def photogrid(request):
         return render(request, 'photogrid.html', {'photos': photo})
     else:
         return redirect('index')
-

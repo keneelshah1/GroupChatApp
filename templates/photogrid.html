@@ -53,36 +53,21 @@
 </nav>
 
 <div class="lightbox" style="padding-top: 80px">
-    {% if search %}
-        <h2 style="color:#F38B34;">Search results for {{ search }}</h2>
-    {% endif %}
+        <h2 style="color:#F38B34;">Search results for </h2>
     <div class="row">
-        {% for photo in photos %}
+        
             <div class="col-lg-6">
                 <div class="hovereffect">
                     <img
-                            src="{{ photo.photo.url }}"
-                            data-mdb-img="{{ photo.photo.url }}"
+                            src="photourl"
+                            data-mdb-img="photourl"
                             alt=""
                             class="w-100 mb-2 mb-md-4 shadow-1-strong rounded"
                     />
-                    <div class="overlay">
-                        <a class='info' href="{% url 'editphoto' photo.id %}">
-                            <span class="material-symbols-outlined">
-                                edit
-                            </span>
-                        </a>
-                        <a class="info" href="#" >
-                            <span class="material-symbols-outlined">
-                                delete
-                            </span>
-                        </a>
-
-                    </div>
                 </div>
             </div>
 
-        {% endfor %}
+        
 
     </div>
 </div>
