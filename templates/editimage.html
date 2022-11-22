@@ -1,11 +1,9 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Photogrid</title>
+    <title>Edit Image</title>
 
-    {#  Bootstrap   #}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -17,16 +15,20 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
+    <style>
+        body {
+            background-color: black;
+            background-position: center;
+            color: #F38B34;
+        }
+        main {
 
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"/>
-    <link rel="stylesheet" type="text/css" href="{% static '/css/photogrid.css' %}">
-    <script>
-
-
-    </script>
+            border-radius: 5px;
+            color: #F38B34;
+        }
+    </style>
 </head>
-<body style="background-color: black">
+<body>
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top shadow-sm">
     <a class="navbar-brand" href="{% url 'photogrid' %}">Photos App</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -36,10 +38,10 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item mr-4">
-                <a class="nav-link" href="{% url 'home' %}">Task App</a>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Task App</a>
             </li>
-            <li class="nav-item mr-4">
+            <li class="nav-item">
                 <a class="nav-link" href="{% url 'addimage' %}">Add images</a>
             </li>
         </ul>
@@ -51,26 +53,33 @@
         </form>
     </div>
 </nav>
-
-<div class="lightbox" style="padding-top: 80px">
-        <h2 style="color:#F38B34;">Search results for </h2>
-    <div class="row">
-        
-            <div class="col-lg-6">
-                <div class="hovereffect">
-                    <img
-                            src="photourl"
-                            data-mdb-img="photourl"
-                            alt=""
-                            class="w-100 mb-2 mb-md-4 shadow-1-strong rounded"
-                    />
-                </div>
+<div class="container">
+    <img class="w-100 mb-2 mb-md-4 shadow-1-strong rounded" src="url">
+    <form method="POST" id="myform" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group row">
+            <label for="newphoto" class="col-md-4 col-form-label text-md-right">Upload a photo</label>
+            <div class="col-md-6">
+                <input id="newphoto" type="file" class="form-control" name="newphoto">
             </div>
+        </div>
+        <div class="form-group row">
+            <label for="tags" class="col-md-4 col-form-label text-md-right">Tags</label>
+            <div class="col-md-6">
+                <input id="tags" type="textarea" class="form-control" value="" name="tags"
+                       placeholder="please separate tags using commas" required>
+            </div>
+        </div>
 
-        
-
-    </div>
+        <div class="form-group row mb-0">
+            <div class="col-md-6 offset-md-5">
+                <button type="submit" class="btn btn-primary" class="register" name="register" data-toggle="modal"
+                        data-target="#myModal">
+                    Submit
+                </button>
+            </div>
+        </div>
+    </form>
 </div>
-
 </body>
 </html>
