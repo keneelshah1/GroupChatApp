@@ -168,3 +168,14 @@ def photogrid(request):
         return render(request, 'photogrid.html', {'photos': photo})
     else:
         return redirect('index')
+
+def deletephoto(request,photoid):
+    if request.user.is_authenticated:
+        photo_obj = PhotoData.objects.get(id=photoid)
+        phototags = Phototag.objects.filter(photo=photo_obj)
+        for i in phototags:
+            i.delete()
+        photo_obj.delete()
+        return redirect('photogrid')
+    else:
+        return redirect('index')
