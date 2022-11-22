@@ -138,6 +138,26 @@ def profile(request):
     # if request.method == 'POST':
 
 
+def photogrid(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            tag = request.POST['search']
+            tag_photos = Phototag.objects.filter(tag__name__icontains=tag)
+
+            ids = []
+            for i in tag_photos:
+                ids.append(i.photo.id)
+            photos = PhotoData.objects.filter(id__in=ids)
+            return render(request, 'photogrid.html', {'photos': photos, 'search':tag})
+        else:
+            user_id = request.user.username
+            user_obj = UserData.objects.get(username=user_id)
+            photo = PhotoData.objects.filter(username=user_obj).order_by('-upload_date')
+            return render(request, 'photogrid.html', {'photos': photo})
+    else:
+        return redirect('index')
+
+
 def addimage(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
@@ -160,14 +180,6 @@ def addimage(request):
         else:
             return render(request, 'addimage.html')
 
-def photogrid(request):
-    if request.user.is_authenticated:
-        user_id = request.user.username
-        user_obj = UserData.objects.get(username=user_id)
-        photo = PhotoData.objects.filter(username=user_obj).order_by('-upload_date')
-        return render(request, 'photogrid.html', {'photos': photo})
-    else:
-        return redirect('index')
 
 def deletephoto(request,photoid):
     if request.user.is_authenticated:
@@ -177,5 +189,45 @@ def deletephoto(request,photoid):
             i.delete()
         photo_obj.delete()
         return redirect('photogrid')
+    else:
+        return redirect('index')
+
+
+def editphoto(request, photoid):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+
+            tags = request.POST['tags']
+            tags = tags.split(', ')
+            tags_to_be_deleted = Phototag.objects.filter(photo__id = photoid)
+            img_obj = PhotoData.objects.get(id=photoid)
+            for i in tags_to_be_deleted:
+                i.delete()
+            for tag in tags:
+                is_exist = Tags.objects.filter(name=tag).exists()
+                if not is_exist:
+                    new_tag = Tags(name=tag)
+                    new_tag.save()
+                else:
+                    new_tag = Tags.objects.get(name=tag)
+
+                PhotoTag = Phototag(tag=new_tag, photo=img_obj)
+                PhotoTag.save()
+            if len(request.FILES) != 0:
+                img_obj.photo = request.FILES['newphoto']
+                img_obj.upload_date = datetime.now()
+                img_obj.save()
+            return redirect('photogrid')
+        else:
+            photo_obj = PhotoData.objects.get(id=photoid)
+            tags = Phototag.objects.filter(photo=photo_obj)
+            all_tags = ""
+            for i in tags:
+                if(all_tags == ""):
+                    all_tags = all_tags + i.tag.name
+                else:
+                    all_tags = all_tags + ', '+ i.tag.name
+            return render(request, 'editimage.html', {'photo':photo_obj, 'tag':all_tags})
+
     else:
         return redirect('index')
