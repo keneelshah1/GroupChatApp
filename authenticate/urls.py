@@ -11,6 +11,10 @@ urlpatterns = [
     path('deleteatsk', views.deletetask, name='deletetask'),
     path('deletealltasks', views.deletealltasks, name='deleteaslltasks'),
     path('profile', views.profile, name='profile'),
+    path('photogrid', views.photogrid, name='photogrid'),
+    path('addimage', views.addimage, name='addimage'),
+    path('deletephoto/<int:photoid>', views.deletephoto, name='deletephoto'),
+    path('editphoto/<int:photoid>', views.editphoto, name='editphoto'),
 ]
 
 
